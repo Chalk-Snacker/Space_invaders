@@ -6,37 +6,35 @@ import { Alien } from "./alien.mjs";
 
 const cvs = document.getElementById("cvs");
 const spcvs = new lib_sprite.TSpriteCanvas(cvs);
+
 export const Sprite_sheet_info = {
-  alien_1: { x: 400, y: 475, width: 64, height: 61, count: 1 },
+  alien_1: { x: 52, y: 50, width: 134, height: 124, count: 2 },
+  alien_2: { x: 79, y: 98, width: 190, height: 184, count: 2 },
+  background: { x: 246, y: 0, width: 576, height: 512, count: 1 },
 };
 
-const alien = new Alien(spcvs);
-
-function draw_game() {
-  spcvs.clearCanvas();
-  alien.draw();
-}
+const Game_props = {
+  alien: new Alien(spcvs),
+};
+//Game_props.alien = new Alien(spcvs);
 
 function load_game() {
   requestAnimationFrame(draw_game);
+  setInterval(animate_game, 10);
 }
 
+function animate_game() {
+  Game_props.alien.animate();
+}
+
+function draw_game() {
+  spcvs.clearCanvas();
+  Game_props.alien.draw();
+  requestAnimationFrame(draw_game);
+}
 // run load_game AFTER spritesheet is loaded
 spcvs.loadSpriteSheet(
-  "../d28krr9-22da40b1-5add-4d51-9520-4402eb0fe081.png",
+  "../media/507030fb-b02f-430e-ad0f-a3f6455fd84e.png",
   load_game,
 );
-
 // -----------------------------------------------
-
-// tegn figurer inntil du har funnet et spritesheet
-/*
-function draw() {
-  ctx.beginPath();
-  ctx.fillStyle = "blue";
-  ctx.fillRect(cvs.width / 2, cvs.height / 2, 50, 50);
-  ctx.stroke();
-}
-*/
-
-//draw();
