@@ -1,9 +1,11 @@
 "use strict";
 import lib2D from "./libs/lib2d_v2.mjs";
 import lib_sprite from "./libs/libSprite_v2.mjs";
-import { Sprite_sheet_info, Game_props } from "./main.mjs";
+import { Sprite_sheet_info, Game_props, spcvs } from "./main.mjs";
 
-const total_aliens = 9;
+const total_aliens_row = 4;
+const total_aliens_col = 12;
+const total_aliens = total_aliens_row * total_aliens_col;
 
 export class Alien extends lib_sprite.TSprite {
   constructor(a_sprite_cvs) {
@@ -12,6 +14,7 @@ export class Alien extends lib_sprite.TSprite {
     this.scale = 0.5;
     // --- sinwave ---
     this.sinwave;
+    //this.ampl = 0.5;
     this.ampl = 15;
     this.freq = 0.02;
     this.theta = 0;
@@ -33,14 +36,22 @@ export class Alien extends lib_sprite.TSprite {
   }
   static spawn_aliens(a_sprite_cvs) {
     // first alien/ init
-    Game_props.aliens.push(new Alien(a_sprite_cvs));
-    for (let i = 1; i < total_aliens; i++) {
-      let alien = Game_props.aliens[i];
-      // temp before game_board
-      let distance = 150;
-      alien = new Alien(a_sprite_cvs);
-      alien.pos.x += i * distance;
-      Game_props.aliens.push(alien);
+    const first_alien = new Alien(a_sprite_cvs);
+    first_alien.pos.x = Game_props.game_board[0][0].pos.x;
+    first_alien.pos.y = Game_props.game_board[0][0].pos.y;
+    Game_props.aliens.push(first_alien);
+
+    for (let i = 0; i < total_aliens_col; i++) {
+      for (let j = 0; j < total_aliens_row; j++) {
+        const alien = new Alien(a_sprite_cvs);
+        alien.shape.x = Game_props.game_board[i][j].pos.x;
+        alien.shape.y = Game_props.game_board[i][j].pos.y;
+
+        // animating on the pos, so need to set aswell ..
+        alien.pos.x = Game_props.game_board[i][j].pos.x;
+        alien.pos.y = Game_props.game_board[i][j].pos.y;
+        Game_props.aliens.push(alien);
+      }
     }
   }
 }

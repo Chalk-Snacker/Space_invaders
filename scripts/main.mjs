@@ -3,9 +3,10 @@
 import lib_2D from "./libs/lib2d_v2.mjs";
 import lib_sprite from "./libs/libSprite_v2.mjs";
 import { Alien, for_each_alien } from "./alien.mjs";
-import { test_cell } from "./game_board.mjs";
-const cvs = document.getElementById("cvs");
-const spcvs = new lib_sprite.TSpriteCanvas(cvs);
+import { draw_temp_tiles, load_gameboard } from "./game_board.mjs";
+
+export const cvs = document.getElementById("cvs");
+export const spcvs = new lib_sprite.TSpriteCanvas(cvs);
 
 export const Sprite_sheet_info = {
   alien_1: { x: 79, y: 98, width: 190, height: 184, count: 2 },
@@ -22,9 +23,13 @@ export const Game_status = {
 export const Game_props = {
   aliens: [],
   game_status: Game_status.playing,
+  game_board: [],
 };
 function load_game() {
+  load_gameboard(cvs);
   Alien.spawn_aliens(spcvs);
+  console.log("total aliens: " + Game_props.aliens.length);
+
   requestAnimationFrame(draw_game);
   setInterval(update_game, 10);
 }
@@ -35,7 +40,7 @@ function update_game() {
 
 function draw_game() {
   spcvs.clearCanvas();
-  test_cell(cvs);
+  draw_temp_tiles(cvs);
   for_each_alien((alien) => alien.draw());
   requestAnimationFrame(draw_game);
 }
