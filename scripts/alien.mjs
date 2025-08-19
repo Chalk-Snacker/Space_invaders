@@ -2,6 +2,7 @@
 import lib2D from "./libs/lib2d_v2.mjs";
 import lib_sprite from "./libs/libSprite_v2.mjs";
 import { Sprite_sheet_info, Game_props, spcvs } from "./main.mjs";
+import { Board_cell_info_type } from "./game_board.mjs";
 
 const total_aliens_row = 4;
 const total_aliens_col = 12;
@@ -35,22 +36,19 @@ export class Alien extends lib_sprite.TSprite {
     this.x = this.pos.x + this.sinwave;
   }
   static spawn_aliens(a_sprite_cvs) {
-    // first alien/ init
-    const first_alien = new Alien(a_sprite_cvs);
-    first_alien.pos.x = Game_props.game_board[0][0].pos.x;
-    first_alien.pos.y = Game_props.game_board[0][0].pos.y;
-    Game_props.aliens.push(first_alien);
-
     for (let i = 0; i < total_aliens_col; i++) {
       for (let j = 0; j < total_aliens_row; j++) {
         const alien = new Alien(a_sprite_cvs);
-        alien.shape.x = Game_props.game_board[i][j].pos.x;
-        alien.shape.y = Game_props.game_board[i][j].pos.y;
+        const gameboard_cell = Game_props.game_board[i][j];
 
+        alien.shape.x = gameboard_cell.pos.x;
+        alien.shape.y = gameboard_cell.pos.y;
         // animating on the pos, so need to set aswell ..
-        alien.pos.x = Game_props.game_board[i][j].pos.x;
-        alien.pos.y = Game_props.game_board[i][j].pos.y;
+        alien.pos.x = gameboard_cell.pos.x;
+        alien.pos.y = gameboard_cell.pos.y;
+
         Game_props.aliens.push(alien);
+        gameboard_cell.info_type = Board_cell_info_type.Alien;
       }
     }
   }

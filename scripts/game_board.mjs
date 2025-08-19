@@ -12,15 +12,18 @@ export function draw_temp_tiles(a_cvs) {
   const padding = 15;
   const cell_width = 60;
   const cell_height = 60;
+
   for (let i = 0; i < row; i++) {
     const row = [];
     for (let j = 0; j < col; j++) {
+      /*
       ctx.fillRect(
-        i * 100 + padding,
+      i * 100 + padding,
         j * 100 + padding,
         cell_width,
         cell_height,
       );
+      */
     }
   }
 }
@@ -34,8 +37,8 @@ export class Board_cell_info {
   }
 }
 
-export function load_gameboard(a_func) {
-  const padding = 100;
+export function load_gameboard() {
+  const padding = 115;
   for (let i = 0; i < row; i++) {
     const row = [];
     for (let j = 0; j < col; j++) {

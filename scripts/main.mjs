@@ -26,9 +26,10 @@ export const Game_props = {
   game_board: [],
 };
 function load_game() {
-  load_gameboard(cvs);
+  load_gameboard();
   Alien.spawn_aliens(spcvs);
   console.log("total aliens: " + Game_props.aliens.length);
+  console.log(Game_props.game_board);
 
   requestAnimationFrame(draw_game);
   setInterval(update_game, 10);
